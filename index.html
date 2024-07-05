@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>questions Mocha Chai Tests</title>
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/mocha/mocha.css" />
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.0.1/mocha.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.2.0/chai.min.js"></script>
+</head>
+<body>
+	<div id="mocha"></div>
+
+	<script>
+		mocha.setup('bdd');
+	</script>
+
+	<!-- Setup -->
+	<script src="src/user_data.js"></script>
+	<script src="test/user_data.js"></script>
+
+    <script>
+		mocha.run();
+    </script>
+	
+</body>
+</html>
+<!-- help from: https://stackoverflow.com/questions/42857778/how-do-you-run-mocha-tests-in-the-browser -->
