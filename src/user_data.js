@@ -3,39 +3,32 @@ const Type = {
   Researcher: "Researcher"
 }
 
-function Profile(username, password, type) {
-  this.username = username;
-  this.password = password;
-  this.type = type;
-  this.statusLogin = false;
-}
-
 function Attempt(inProgress) {
   // General
-  this.description    = "description";
-	this.note           = "note";
-  this.inProgress     = inProgress;
-  this.timeStart      = null;
-  this.timeEnd        = null;
-  this.LLM            = null;
-	this.testsFailed    = null;
-  this.testsCorrect   = null;
-  this.testsTotal     = null;
+  this.description      = "description";
+	this.notes            = "note";
+  this.inProgress       = inProgress;
+  this.startTime        = null;
+  this.endTime          = null;
+  this.generatedCode    = null;
+	this.failingTestCases = null;
+  this.testCorrect      = null;
+  this.testTotal        = null;
 
   // Specific
   if (!inProgress) {
-    this.timeStart      = new Date("2024-07-01T00:00:00");
-    this.timeEnd        = new Date("2024-07-01T00:10:00");
-    this.LLM            = "LLM"
-    this.testsFailed    = "testsFailed"
-    this.testsCorrect   = 1;
-    this.testsTotal     = 2;
+    this.startTime        = new Date("2024-07-01T00:00:00");
+    this.endTime          = new Date("2024-07-01T00:10:00");
+    this.generatedCode    = "LLM"
+    this.failingTestCases = "testsFailed"
+    this.testCorrect      = 1;
+    this.testTotal        = 2;
   }
 }
 
 function Question_Attempts(id, sampleData) {
   // ID
-  this.id = id;
+  this.questionId = id;
 
   // Attempts
   let attempts = [];
@@ -50,7 +43,10 @@ function Question_Attempts(id, sampleData) {
 function User(username, password, type)
 {
   // Profile
-  this.profile = new Profile(username, password, type);
+  this.username = username;
+  this.password = password;
+  this.type = type;
+  this.statusLogin = false;
 
   // Questions
   let questions = [];
