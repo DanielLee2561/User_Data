@@ -3,81 +3,105 @@ const Type = {
   Researcher: "Researcher"
 }
 
-function Attempt(inProgress) {
-  // General
-  this.description      = "description";
-	this.notes            = "note";
-  this.inProgress       = inProgress;
-  this.startTime        = null;
-  this.endTime          = null;
-  this.duration         = null;
-  this.generatedCode    = null;
-	this.failingTestCases = null;
-  this.testCorrect      = null;
-  this.testTotal        = null;
+function attempt(inProgress, duration, testCorrect, testTotal) {
+  let attempt = {};
+  
+  attempt.description      = "";
+	attempt.notes            = "";
+  attempt.inProgress       = inProgress;
+  attempt.startTime        = new Date("2024-07-01T00:00:00");
+  attempt.endTime          = null;
+  attempt.duration         = null;
+  attempt.generatedCode    = null;
+	attempt.failingTestCases = null;
+  attempt.testCorrect      = null;
+  attempt.testTotal        = null;
 
-  // Specific
   if (!inProgress) {
-    this.startTime        = new Date("2024-07-01T00:00:00");
-    this.endTime          = new Date("2024-07-01T00:10:00");
-    this.duration         = (this.endTime - this.startTime) / 1000;
-    this.generatedCode    = "LLM"
-    this.failingTestCases = "testsFailed"
-    this.testCorrect      = 1;
-    this.testTotal        = 2;
-  }
-}
+    attempt.description      = "Description";
+	  attempt.notes            = "Notes";
+    attempt.generatedCode    = "LLM"
+    attempt.failingTestCases = "Tests Failed"
 
-function Question_Attempts(id, sampleData) {
-  // ID
-  this.questionId = id;
+    attempt.endTime = new Date(attempt.startTime);
+    attempt.endTime.setSeconds(duration);
 
-  // Attempts
-  let attempts = [];
-
-  for (let i = 0; i < sampleData.length; i++) {
-    attempts.push(new Attempt(sampleData[i]));
+    attempt.duration         = duration;
+    attempt.testCorrect      = testCorrect;
+    attempt.testTotal        = testTotal;
   }
 
-  this.attempts = attempts;
+  return attempt;
 }
 
-function User(username, password, type)
-{
-  // Profile
-  this.username = username;
-  this.password = password;
-  this.type = type;
-  this.statusLogin = false;
+function question(id, attempts) {
+  let question = {};
 
-  // Questions
-  let questions = [];
+  question.questionId = id;
+  question.attempts = [];
 
-  QA_1 = new Question_Attempts(1, [false, false, false, true]); questions.push(QA_1);
-  QA_2 = new Question_Attempts(2, [false]);                     questions.push(QA_2);
-  QA_3 = new Question_Attempts(3, [false]);                     questions.push(QA_3);
-  QA_4 = new Question_Attempts(4, [false]);                     questions.push(QA_4);
-  QA_5 = new Question_Attempts(5, [false]);                     questions.push(QA_5);
-  QA_6 = new Question_Attempts(6, [false]);                     questions.push(QA_6);
-  QA_7 = new Question_Attempts(7, [false]);                     questions.push(QA_7);
-  QA_8 = new Question_Attempts(8, [false]);                     questions.push(QA_8);
-  QA_9 = new Question_Attempts(9, [true]);                      questions.push(QA_9);
-  QA_10 = new Question_Attempts(10, []);                        questions.push(QA_10);
-
-  this.questions = questions;
+  return question;
 }
 
-function user_data()
-{
-  // Variable
+function user(username, password, type) {
+  let user = {};
+
+  user.username = username;
+  user.password = password;
+  user.type = type;
+  user.statusLogin = false;
+  user.questions = [];
+
+  let q1 = question(1);
+  let q2 = question(2);
+  let q3 = question(3);
+  let q4 = question(4);
+  let q5 = question(5);
+  let q6 = question(6);
+  let q7 = question(7);
+  let q8 = question(8);
+  let q9 = question(9);
+  let q10 = question(10);
+
+  q1.attempts.push(attempt(false, 600, 0, 1));
+  q1.attempts.push(attempt(false, 600, 1, 1));
+  q1.attempts.push(attempt(false, 500, 1, 1));
+  q1.attempts.push(attempt(true));
+  q2.attempts.push(attempt(false, 600, 1, 2));
+  q3.attempts.push(attempt(false, 600, 1, 2));
+  q4.attempts.push(attempt(false, 600, 1, 2));
+  q5.attempts.push(attempt(false, 600, 1, 2));
+  q6.attempts.push(attempt(false, 600, 1, 2));
+  q7.attempts.push(attempt(false, 600, 1, 2));
+  q8.attempts.push(attempt(false, 600, 1, 2));
+  q9.attempts.push(attempt(true));
+
+  user.questions.push(q1);
+  user.questions.push(q2);
+  user.questions.push(q3);
+  user.questions.push(q4);
+  user.questions.push(q5);
+  user.questions.push(q6);
+  user.questions.push(q7);
+  user.questions.push(q8);
+  user.questions.push(q9);
+  user.questions.push(q10);
+
+  return user;
+}
+
+function user_data() {
   let users = [];
 
-  // User
-  users.push(new User("Student_A", "pStudent_A", Type.Student));
-  users.push(new User("Student_B", "pStudent_B", Type.Student));
-  users.push(new User("Student_C", "pStudent_C", Type.Student));
-  users.push(new User("Researcher_A", "pResearcher_A", Type.Researcher));
+  let student_A = user("Student_A", "pStudent_A", Type.Student);
+  let student_B = user("Student_B", "pStudent_B", Type.Student);
+  let student_C = user("Student_C", "pStudent_C", Type.Student);
+  let researcher_A = user("Researcher_A", "pResearcher_A", Type.Researcher);
 
-  // Return
+  users.push(student_A);
+  users.push(student_B);
+  users.push(student_C);
+  users.push(researcher_A);
+
   return { users: users };
 }
